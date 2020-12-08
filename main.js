@@ -1,28 +1,16 @@
 // метод filter 
-const names = ['Jackw', 'David', 'Ola'];
-const newNames = [];
 
-const filterFoo = function (array) {
-    for (let i = 0; i < array.length; i++) {    
-        if (array[i].length < 4) {
-          newNames.push(array[i]);
-        }
-    }
-}
-filterFoo(names);
-console.log(newNames);
-
-array33 = ['Mykola', 'Petro', 'Iv'];
+const array33 = ['Mykola', 'Petro', 'Iv'];
 
 const react = function(a) {
-   return a + 'T'
+   return a.length < 3;
 }
 
 const myFilter = function (array,callback) {
     const Name33 = []
     for (let i = 0; i < array.length; i++) {
-        if (array[i].length > 3) {
-            Name33.push(callback(array33[i]))
+        if (callback(array33[i])) {
+            Name33.push(array33[i])
         }
     }
     return Name33;
@@ -30,33 +18,20 @@ const myFilter = function (array,callback) {
 console.log(myFilter(array33, react))
 
 // метод map
-const names1 = ['George', 'Wood', 'Function']
-const newNames1 = [];
 
-const mapFoo = function (array) {
-    for (let i = 0; i < array.length; i++) {
-        newNames1.push(array[i].length)
-    }
-}
-mapFoo(names1)
-console.log(newNames1)
-
-
-var products = [{
+let products = [{
     id: 0,
     name: 'Product 1'
-    },{
+    },
+    {
     id: 1,
     name: 'Product 2'
     }];
-console.log(products[0])
 
 function mapCallback(product) {
-    return product.id + 5
+    return product.id * 5;
 }
-
-// const result = myMap(products, mapCallback);
-        
+       
 function myMap(array, cb) {
     const resultArray = [];
     for(var i = 0; i < products.length; i++) {
@@ -67,84 +42,70 @@ function myMap(array, cb) {
 console.log(myMap(products, mapCallback)) 
 
 // метод reduce
-const arr = [1, 2, 3, 4, 10];
-
-let sum = 0
-const reduceFoo = function (array) {
-    for (let i = 0; i<array.length; i++) {
-        sum += array[i]
-    }
-}
-reduceFoo(arr)
-console.log(sum)
 
 const arr22 = [2, 5, 8, 11]
 
-const forReduce = function(a) {
-    return a * 2;
+const forReduce = function(acc, cur) {
+    return acc + cur;
+}
+const w = [['oleg', 21], ['mikola', 44]]
+
+const fromObjToArr = function(acc, next) {
+    acc[next[0]] = next[1];
+    return acc;
 }
 
-const myReduce = function(array, callback, initialValue) {
-    for(let i = 0; i<array.length; i++) {
-        initialValue += callback(array[i])
+function myReduce(array, reducer, initialValue) {
+    let i;
+
+    if (initialValue) {
+        i = 0;
+    } else {
+        i = 1;
+        initialValue = array[0];
     }
-    return initialValue;
+    let accumulator = initialValue;
+    for (i; i < array.length; i++) {
+        accumulator = reducer(accumulator, array[i], i, array);
+    }
+    return accumulator;
 }
-console.log(myReduce(arr22, forReduce, 10)) 
+
+const reducerResult = myReduce(arr22, forReduce);
+console.log(reducerResult);
+const reducer2Result = myReduce(w, fromObjToArr, {});
+console.log(reducer2Result);
 
 // метод forEach
-const arr1 =  ["Bilbo", "Gandalf", "Nazgul"]
-
-const forEachFoo = function(array) {
-    for (let i = 0; i < array.length; i++) {
-        console.log(array[i])
-        console.log(array[i].length)
-    }
-}
-forEachFoo(arr1)
 
 const arr11 = [17, 117, 177, 777];
 
 const forMyEach = function(a) {
-   return a + 10;
+   return alert(a + 10);
 }
 
 const myForEach = function(array, callback) {
     for (let i = 0; i < array.length; i++) {
-        console.log(callback(array[i]));
+        callback(array[i]);
     }
 }
 myForEach(arr11, forMyEach);
 
 // метод every
-const arr2 = [11, 21, 31]; 
-const newArr2 = []
-const everyFoo = function(array) {
-    for (let i = 0; i < array.length; i++) {
-        if (array[i] > 5) {
-          newArr2.push(array[i])
-        }
-    }
-    console.log(newArr2.length)
-    if (newArr2.length === 0) {
-            return false;
-        } else {
-            return true;
-        }
-}
 
-console.log(everyFoo(arr2))
-
-const arr44 =[22, 33, 44];
+const arr44 = [22, 33, 44, '12'];
 
 const forEvery = function (a) {
-    return a * 4;
+    if (typeof a == 'string') {
+        return a;
+    };
 }
+
 const myEvery = function (array, callback) {
     let newArr44 = [];
     for (let i = 0; i < array.length; i++) {
-        if (callback(array[i]) > 200) {
-            newArr44.push(callback(array[i]))
+        if (callback(array[i])) {
+            newArr44.push(array[i])
         }
     }
     if (newArr44.length === 0) {
@@ -153,38 +114,21 @@ const myEvery = function (array, callback) {
         return true;
     }
 }
-
 console.log(myEvery(arr44, forEvery))
 
 // метод some
-let arr3 = [1, 2, 3];
-let newArr3 = [];
-
-let someFoo = function(array) {
-    for (let i = 0; i<array.length; i++) {
-        if (array[i] === 2) {
-            newArr3.push(array[i])
-        } 
-    }
-    if (newArr3.length === 0) {
-        return false;
-    } else {
-        return true;
-    }
-}
-console.log(someFoo(arr3))
 
 const arr55 = [7, 77, 777];
 
 const forSome = function(a) {
-    return a + 3;
+    return a > 10000000;
 }
 
 const mySome = function(array, callback) {
     let newArr55 = [];
     for (let i = 0; i<array.length; i++) {
-        if (callback(array[i]) === 80) {
-            newArr55.push(callback(array[i]));
+        if (callback(array[i])) {
+            newArr55.push(array[i]);
         }
     }
     if(newArr55.length === 0) {
@@ -193,5 +137,4 @@ const mySome = function(array, callback) {
         return true;
     }
 }
-
 console.log(mySome(arr55, forSome))
